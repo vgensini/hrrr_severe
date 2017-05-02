@@ -61,6 +61,18 @@ torCWAlist=[]
 windCWAlist=[]
 hailCWAlist=[]
 CWAlist=[] #List of CWAs with synthetic reports
+m = Basemap(projection='lcc',lat_0=38,lon_0=-97.5,llcrnrlat=22,urcrnrlat=48, llcrnrlon=-120,urcrnrlon=-62,resolution='l',area_thresh=100000.)	
+m.drawcoastlines(color='gray',zorder=5)
+#m.drawstates(color='black',zorder=3)
+m.drawcountries(color='gray',zorder=4)
+#m.drawcounties(color='gray',zorder=3)
+#m.readshapefile('/home/scripts/gensini/hrrr_severe/shapefiles/CWA',name='CWA',linewidth=0.5,zorder=4, color='Tan')
+m.readshapefile('/home/scripts/gensini/hrrr_severe/shapefiles/US',name='US',linewidth=0.5,zorder=3, color='black')
+#m.drawlsmask(land_color='none',ocean_color='w',zorder=2)
+#parallels = np.arange(0.,90,5.)
+#m.drawparallels(parallels,labels=[1,0,0,0],color='DarkSlateGray',fontsize=10,zorder=6)
+#meridians = np.arange(180.,360.,5.)
+#m.drawmeridians(meridians,labels=[0,0,0,1],color='DarkSlateGray',fontsize=10,zorder=7)   
 count = 1 #First forecast hour
 for dt in dates: #begin loop for dates in dates list
 	YY = dt.year
@@ -84,13 +96,13 @@ for dt in dates: #begin loop for dates in dates list
 	lats,lons = uvv.latlons()
 	uvv_values = uvv.values
 	#make basemap
-	m = Basemap(projection='lcc',lat_0=38,lon_0=-97.5,llcrnrlat=22,urcrnrlat=48, llcrnrlon=-120,urcrnrlon=-62,resolution='l',area_thresh=100000.)
-	m.drawcoastlines(color='gray',zorder=5)
+	#m = Basemap(projection='lcc',lat_0=38,lon_0=-97.5,llcrnrlat=22,urcrnrlat=48, llcrnrlon=-120,urcrnrlon=-62,resolution='l',area_thresh=100000.)
+	#m.drawcoastlines(color='gray',zorder=5)
 	#m.drawstates(color='black',zorder=3)
-	m.drawcountries(color='gray',zorder=4)
+	#m.drawcountries(color='gray',zorder=4)
 	#m.drawcounties(color='gray',zorder=3)
 	#m.readshapefile('/home/scripts/gensini/hrrr_severe/shapefiles/CWA',name='CWA',linewidth=0.5,zorder=4, color='Tan')
-	m.readshapefile('/home/scripts/gensini/hrrr_severe/shapefiles/US',name='US',linewidth=0.5,zorder=3, color='black')
+	#m.readshapefile('/home/scripts/gensini/hrrr_severe/shapefiles/US',name='US',linewidth=0.5,zorder=3, color='black')
 	#m.drawlsmask(land_color='none',ocean_color='w',zorder=2)
 	#parallels = np.arange(0.,90,5.)
 	#m.drawparallels(parallels,labels=[1,0,0,0],color='DarkSlateGray',fontsize=10,zorder=6)
@@ -105,7 +117,7 @@ for dt in dates: #begin loop for dates in dates list
 	
 	##DECIDE WHAT A SYNTHETIC REPORT IS##
 	#reports = np.array((refc>=45) & (uphly>=50),dtype=int) #decide what a synthetic report is
-	hail_report = np.array((uvv_values>=30) & (uvv_values <200),dtype=int)
+	hail_report = np.array((uvv_values>=27) & (uvv_values <200),dtype=int)
 	hail_count = np.add(hail_count,hail_report)
 	hail_hrly_report_value = hail_report.sum()
 	#print hrly_report_value
